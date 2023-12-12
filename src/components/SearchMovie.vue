@@ -9,18 +9,20 @@
     <!-- <a-spin spinning="indicator" size="large"></a-spin> -->
   </p>
   <!-- <button v-on:click="searchByTitle">Fire!</button> -->
-  <div v-if="error === undefined && search !== '' && film.title !== ''">
+  <!-- <div v-if="error === undefined && search !== '' && film.title !== ''"> -->
+  <div v-if="search !== '' && film.title !== ''">
     <div class="description" >
       <div>
         <img :src=film.img>
       </div>
       <div>
         <p><b>Title:</b> {{ film.title }}</p>
-        <p><b>Year:</b> {{ film.year }}</p>
-        <p><b>Director:</b> {{ film.director }}</p>
-        <p><b>Genre:</b> {{ film.genre }}</p>
+        <!-- <p><b>Year:</b> {{ film.year }}</p> -->
+        <p><b>Release Date:</b> {{ film.year }}</p>
+        <p><b>Vote average:</b> {{ film.imdbRating }}</p>
+        <!-- <p><b>Director:</b> {{ film.director }}</p>
+        <p><b>Genre:</b> {{ film.genre }}</p> -->
         <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
-        <p><b>imdbRating:</b> {{ film.imdbRating }}</p>
       </div>
 
     </div>
@@ -155,21 +157,21 @@ export default defineComponent({
             }
             
             //search by title
-            this.response = axios.get(`http://www.omdbapi.com/?t=${this.search}&apikey=${process.env.VUE_APP_OMDB_API_KEY}`)
-                .then(resp => {
-                this.response = resp.data;
-                this.film.title = resp.data.Title;
-                this.film.year = resp.data.Year;
-                this.film.director = resp.data.Director;
-                this.film.genre = resp.data.Genre;
-                this.film.imdbRating = resp.data.imdbRating;
-                this.film.plot = resp.data.Plot;
-                this.film.img = resp.data.Poster;
-                this.error = resp.data.Error;
-                console.log(resp);
-              }).finally(() => {
-                this.isLoading = false;
-            });
+            // this.response = axios.get(`http://www.omdbapi.com/?t=${this.search}&apikey=${process.env.VUE_APP_OMDB_API_KEY}`)
+            //     .then(resp => {
+            //     this.response = resp.data;
+            //     this.film.title = resp.data.Title;
+            //     this.film.year = resp.data.Year;
+            //     this.film.director = resp.data.Director;
+            //     this.film.genre = resp.data.Genre;
+            //     this.film.imdbRating = resp.data.imdbRating;
+            //     this.film.plot = resp.data.Plot;
+            //     this.film.img = resp.data.Poster;
+            //     this.error = resp.data.Error;
+            //     console.log(resp);
+            //   }).finally(() => {
+            //     this.isLoading = false;
+            // });
 
             //search for id
             let config = {
@@ -178,10 +180,15 @@ export default defineComponent({
                }
            };
            
-           axios.get(`https://api.themoviedb.org/3/search/movie?query=${this.search}&include_adult=false&language=en-US&page=1`, config)
+           this.response = axios.get(`https://api.themoviedb.org/3/search/movie?query=${this.search}&include_adult=false&language=en-US&page=1`, config)
                .then(resp => {
                  // this.film.id = resp?.data?.results[0]?.id ? resp?.data?.results[0]?.id : 0
                  this.film.id = resp?.data?.results[0]?.id
+                 this.film.title = resp.data.results[0].title
+                 this.film.year = resp.data.results[0].release_date
+                 this.film.plot = resp.data.results[0].overview
+                 this.film.imdbRating = resp.data.results[0].vote_average
+                 console.log('resp.data.results[0].title', resp.data.results[0].title)
                  // console.log('RESP - this.film.id', this.film.id)
                // console.log(resp);
                this.fetchTrailer();
