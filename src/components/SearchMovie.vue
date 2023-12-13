@@ -42,7 +42,7 @@
       <div v-for="(item, index) in random" v-bind:key="index">
         <li @click="detail(item.title, item.id)">
           <!-- <img :src="baseUrl + item.file_path" height="100"> -->
-          <img :src="baseUrl + item.poster_path" height="220" alt="item.title">
+          <img :src="baseUrl + item.poster_path" alt="item.title">
           <p class="text-overflow-ellipses">{{ item.title }}</p>
         </li>
       </div>
@@ -219,7 +219,7 @@ export default defineComponent({
                 //   this.responseTrailer = ''
                 // }
                 // this.responseTrailer = 'key' in first ? `https://www.youtube.com/embed/${first.key}?autoplay=1&amp;controls=0` : '' // OK FOR NO-CONTROL PLAY PAUSE
-                this.responseTrailer = 'key' in first ? `https://www.youtube.com/embed/${first.key}?autoplay=1` : '';
+                this.responseTrailer = 'key' in first ? `https://www.youtube.com/embed/${first.key}?autoplay=1&enablejsapi=1` : '';
                 console.log('this.responseTrailer', this.responseTrailer)
 
             })
@@ -317,7 +317,11 @@ margin:0;
   display: flex;
   flex-wrap: wrap;
   padding-top: 2%;
-  padding-left: 11%;
+  padding-left: 9%;
+
+}
+.random-poster > img {
+  width: max-content;
 }
 .yearTitle {
   padding-top: 1%;
