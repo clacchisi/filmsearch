@@ -17,7 +17,8 @@
         <p><b>Release Date:</b> {{ film.year }}</p>
         <p><b>Vote average:</b> {{ film.imdbRating }}</p>
         <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
-        <p v-show="responseTrailer">Trailer: 
+        <p class="trailer" v-show="responseTrailer">
+          <b>Trailer: </b>
           <a :href="responseTrailer">See on Youtube </a>
         </p>
       </div>
@@ -287,6 +288,10 @@ export default defineComponent({
 </script>
  
 <style scoped>
+.trailer {
+  padding-top: 6%;
+}
+
 .info-description {
   padding-right: 5%
 }
