@@ -306,7 +306,7 @@ export default defineComponent({
  
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 150px;    
+  max-width: 331px;    
 }
 h3 {
 margin: 20px 0 0;
