@@ -13,7 +13,7 @@
   <div v-if="search !== '' && film.title !== ''">
     <div class="description" >
       <div>
-        <img :src="baseUrl + film.img" alt="" width="100px" height="100px">
+        <img class="img-detail" :src="baseUrl + film.img" alt="" width="100px" height="100px">
       </div>
       <div>
         <p><b>Title:</b> {{ film.title }}</p>
@@ -47,7 +47,7 @@
       <div v-for="(item, index) in random" v-bind:key="index">
         <li @click="detail(item.title, item.id)">
           <!-- <img :src="baseUrl + item.file_path" height="100"> -->
-          <img :src="baseUrl + item.poster_path" alt="item.title">
+          <img class="img-random" :src="baseUrl + item.poster_path" alt="item.title">
           <p class="text-overflow-ellipses">{{ item.title }}</p>
         </li>
       </div>
@@ -301,11 +301,6 @@ export default defineComponent({
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-body {
-  padding-top: 5%;
-  padding-bottom: 5%;
-}
-
 .text-overflow-ellipses {
   overflow: hidden;
  
@@ -346,11 +341,21 @@ img {
 
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
-  img {
+  .img-detail {
     width: 100%;
     height: 100%;
     padding-right: 10%;
   }
+  .img-random {
+    width: 50%;
+    height: 50%;
+    padding-right: 10%;
+  }
+  /* img {
+    width: 100%;
+    height: 100%;
+    padding-right: 10%;
+  } */
   p{
     font-size: 20px;
     overflow: unset !important;
