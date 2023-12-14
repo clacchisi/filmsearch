@@ -13,14 +13,30 @@
         <img class="img-detail" :src="baseUrl + film.img" alt="" width="100px" height="100px">
       </div>
       <div class="info-description">
-        <p><b>Title:</b> {{ film.title }}</p>
-        <p><b>Release Date:</b> {{ film.year }}</p>
-        <p><b>Vote average:</b> {{ film.imdbRating }}</p>
-        <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
-        <p class="trailer" v-show="responseTrailer">
-          <b>Trailer: </b>
-          <a :href="responseTrailer">See on Youtube </a>
-        </p>
+        <!-- --------------------------- -->
+        <a-collapse style="background: white;" v-model:activeKey="activeKey">
+            <p>activeKey: {{activeKey}}</p>
+          <a-collapse-panel  key="1" header="INFO">
+            <p><b>Title:</b> {{ film.title }}</p>
+            <p><b>Release Date:</b> {{ film.year }}</p>
+            <p><b>Vote average:</b> {{ film.imdbRating }}</p>
+            <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
+            <p class="trailer" v-show="responseTrailer">
+              <b>Trailer: </b>
+              <a :href="responseTrailer">See on Youtube </a>
+            </p>
+          </a-collapse-panel>
+          <a-collapse-panel  key="2" header="INFO">
+            <p><b>Title:</b> {{ film.title }}</p>
+            <p><b>Release Date:</b> {{ film.year }}</p>
+            <p><b>Vote average:</b> {{ film.imdbRating }}</p>
+            <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
+            <p class="trailer" v-show="responseTrailer">
+              <b>Trailer: </b>
+              <a :href="responseTrailer">See on Youtube </a>
+            </p>
+          </a-collapse-panel>
+        </a-collapse>
       </div>
 
     </div>
@@ -62,6 +78,11 @@ import debounce from 'lodash-es/debounce';
 import LoadingOutlined from '@ant-design/icons-vue';
 import { defineComponent, h } from 'vue';
 // import StudyComp from './StudyComp.vue'
+
+import { ref } from 'vue';
+
+let activeKey = ref(['1']);
+
 
 interface FilmINT {
   title     : string
@@ -136,6 +157,15 @@ export default defineComponent({
         return {
             indicator,
         };
+    },
+    // watch(activeKey, val => {
+    //   console.log(val);
+    // }),
+    watch: {
+      activeKey:function(activeKey,val){
+        activeKey = val
+        console.log('activeKey',activeKey)
+      }
     },
     data() {
         return data;
