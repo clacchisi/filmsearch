@@ -365,7 +365,9 @@ img {
 @media screen and (max-width: 600px) {
   .description {
    display: block ;
-  gap: 3%;
+   gap: 3%;
+   padding-left: 10%;
+
   /* justify-content: center;  */
   }
 }
