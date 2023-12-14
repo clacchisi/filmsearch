@@ -13,7 +13,7 @@
   <div v-if="search !== '' && film.title !== ''">
     <div class="description" >
       <div>
-        <img :src=film.img>
+        <img :src="baseUrl + film.img" alt="" width="100px" height="100px">
       </div>
       <div>
         <p><b>Title:</b> {{ film.title }}</p>
@@ -27,7 +27,12 @@
 
     </div>
     <div v-show="responseTrailer">
+      <p>Trailer: 
+        <a :href="responseTrailer">{{responseTrailer}}</a>
+      </p>
+      <div v-if="innerWidth > mobileinnerWidth">
       <iframe width="500" height="315" :src="responseTrailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
     </div>
   </div>
   <div v-else-if="error === 'Movie not found!'">
@@ -99,29 +104,33 @@ interface RandomImageINT {
 }
 
 interface SearchMovieINT {
-  film       : FilmINT
-  error      : string
-  search     : string
-  response   : any
-  random     : Array<RandomImageINT>
-  baseUrl    : string
-  randomyear : number
-  page       : number
-  isLoading  : boolean
-  responseTrailer: string
+  film            : FilmINT
+  error           : string
+  search          : string
+  response        : any
+  random          : Array<RandomImageINT>
+  baseUrl         : string
+  randomyear      : number
+  page            : number
+  isLoading       : boolean
+  responseTrailer : string,
+  innerWidth      : number,
+  mobileinnerWidth: number
 }
  
 let data:SearchMovieINT = {
   film,
-  error      : '',
-  search     : '',
-  response   : {},
-  random     : [],
-  baseUrl    : 'https://image.tmdb.org/t/p/original/',
-  randomyear : 2023,
-  page       : 1,
-  isLoading  : false,
-  responseTrailer : ''
+  error           : '',
+  search          : '',
+  response        : {},
+  random          : [],
+  baseUrl         : 'https://image.tmdb.org/t/p/original/',
+  randomyear      : 2023,
+  page            : 1,
+  isLoading       : false,
+  responseTrailer : '',
+  innerWidth      : 0,
+  mobileinnerWidth: 500
 }
  
 export default defineComponent({
@@ -147,6 +156,10 @@ export default defineComponent({
     },
     created () {
       this.fetchRandom();
+      this.innerWidth = window.innerWidth
+      console.log('innerWidth', innerWidth)
+      console.log('mobileinnerWidth', this.mobileinnerWidth)
+
     },
     methods: {
         searchByTitle: debounce(function (this: any, title = '') {
@@ -183,6 +196,7 @@ export default defineComponent({
            this.response = axios.get(`https://api.themoviedb.org/3/search/movie?query=${this.search}&include_adult=false&language=en-US&page=1`, config)
                .then(resp => {
                  // this.film.id = resp?.data?.results[0]?.id ? resp?.data?.results[0]?.id : 0
+                 this.film.img = resp?.data?.results[0]?.backdrop_path
                  this.film.id = resp?.data?.results[0]?.id
                  this.film.title = resp.data.results[0].title
                  this.film.year = resp.data.results[0].release_date
@@ -287,6 +301,7 @@ export default defineComponent({
  
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .text-overflow-ellipses {
   overflow: hidden;
  
@@ -320,8 +335,22 @@ margin:0;
   padding-left: 9%;
 
 }
-.random-poster > img {
-  width: max-content;
+img {
+  width: 200px;
+  height: 300px;
+}
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  img {
+    width: 100%;
+    height: 100%;
+    padding-right: 10%;
+  }
+  p{
+    font-size: 20px;
+    overflow: unset !important;
+  }
 }
 .yearTitle {
   padding-top: 1%;
@@ -332,5 +361,12 @@ margin:0;
   display: flex; 
   gap: 3%;
   justify-content: center; 
+}
+@media screen and (max-width: 600px) {
+  .description {
+   display: block ;
+  gap: 3%;
+  /* justify-content: center;  */
+  }
 }
 </style>
