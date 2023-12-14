@@ -12,7 +12,7 @@
       <div>
         <img class="img-detail" :src="baseUrl + film.img" alt="" width="100px" height="100px">
       </div>
-      <div>
+      <div class="info-description">
         <p><b>Title:</b> {{ film.title }}</p>
         <p><b>Release Date:</b> {{ film.year }}</p>
         <p><b>Vote average:</b> {{ film.imdbRating }}</p>
@@ -287,6 +287,9 @@ export default defineComponent({
 </script>
  
 <style scoped>
+.info-description {
+  padding-right: 5%
+}
 
 .text-overflow-ellipses {
   overflow: hidden;
