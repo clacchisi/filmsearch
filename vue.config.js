@@ -21,6 +21,17 @@ module.exports = defineConfig({
       sizes: "192x192",
       type: "png",
       purpose: "any maskable",
+    }, {
+      src: "./assets/android-chrome-maskable-512x512.png",
+      sizes: "512x512",
+      type: "png",
+      purpose: "any maskable",
+    },
+    {
+      src: "./assets/android-chrome-maskable-192x192.png",
+      sizes: "192x192",
+      type: "png",
+      purpose: "any maskable",
     },
   ],
   }
