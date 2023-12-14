@@ -6,10 +6,7 @@
   <p></p>
   <p>
     <a-spin :spinning="isLoading" size="large"></a-spin>
-    <!-- <a-spin spinning="indicator" size="large"></a-spin> -->
   </p>
-  <!-- <button v-on:click="searchByTitle">Fire!</button> -->
-  <!-- <div v-if="error === undefined && search !== '' && film.title !== ''"> -->
   <div v-if="search !== '' && film.title !== ''">
     <div class="description" >
       <div>
@@ -17,11 +14,8 @@
       </div>
       <div>
         <p><b>Title:</b> {{ film.title }}</p>
-        <!-- <p><b>Year:</b> {{ film.year }}</p> -->
         <p><b>Release Date:</b> {{ film.year }}</p>
         <p><b>Vote average:</b> {{ film.imdbRating }}</p>
-        <!-- <p><b>Director:</b> {{ film.director }}</p>
-        <p><b>Genre:</b> {{ film.genre }}</p> -->
         <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
         <p v-show="responseTrailer">Trailer: 
           <a :href="responseTrailer">See on Youtube </a>
@@ -41,12 +35,9 @@
   <div v-if="search === '' && response.length !== 0">
     <p class="yearTitle">YEAR: {{ randomyear }}</p>
     <input type="number" @input="fetchRandom(1)" v-model="randomyear" min="1980" max="2025">
-    <!-- <select id="year"></select> -->
     <div class="random-poster" >
-      <!-- <a-spin :spinning="isLoading" size="large"></a-spin> -->
       <div v-for="(item, index) in random" v-bind:key="index">
         <li @click="detail(item.title, item.id)">
-          <!-- <img :src="baseUrl + item.file_path" height="100"> -->
           <img class="img-random" :src="baseUrl + item.poster_path" alt="item.title">
           <p class="text-overflow-ellipses">{{ item.title }}</p>
         </li>
@@ -64,14 +55,12 @@
 </template>
  
 <script lang="ts">
-// import { defineComponent } from 'vue';
 import axios from 'axios';
 import debounce from 'lodash-es/debounce';
 
 import LoadingOutlined from '@ant-design/icons-vue';
 import { defineComponent, h } from 'vue';
-// import HelloWorld from './HelloWorld.vue';
-import StudyComp from './StudyComp.vue'
+// import StudyComp from './StudyComp.vue'
 
 interface FilmINT {
   title     : string
@@ -130,12 +119,12 @@ let data:SearchMovieINT = {
   isLoading       : false,
   responseTrailer : '',
   innerWidth      : 0,
-  mobileinnerWidth: 500
+  mobileinnerWidth: 600
 }
  
 export default defineComponent({
     name: 'SearchMovie',
-    components: { StudyComp },
+    // components: { StudyComp },
     setup() {
         const indicator = h(LoadingOutlined, {
             style: {
@@ -152,7 +141,6 @@ export default defineComponent({
     },
     async mounted() {
         this.isLoading = true;
-        // await this.fetchRandom();
     },
     created () {
       this.fetchRandom();
@@ -168,7 +156,7 @@ export default defineComponent({
             if (title !== '') {
                 this.search = title;
             }
-            
+            // OLD SEARCH 
             //search by title
             // this.response = axios.get(`http://www.omdbapi.com/?t=${this.search}&apikey=${process.env.VUE_APP_OMDB_API_KEY}`)
             //     .then(resp => {
@@ -202,6 +190,7 @@ export default defineComponent({
                  this.film.year = resp.data.results[0].release_date
                  this.film.plot = resp.data.results[0].overview
                 //  this.film.imdbRating = resp.data.results[0].vote_average
+                // NEW LIKE 6.7
                  this.film.imdbRating = Math.trunc(resp.data.results[0].vote_average * 10) / 10
                  
                   this.fetchTrailer();
@@ -224,7 +213,6 @@ export default defineComponent({
             if (this.film.id !== undefined){
             await axios.get(`https://api.themoviedb.org/3/movie/${this.film.id}/videos?language=it-IT`, config)
                 .then(resp => {
-                // this.responseTrailer = 'https://www.youtube.com/watch?v=' + resp.data.results[0].key
                 const [first = {}] = resp.data?.results || [];
                 // if ('key' in first) {
                 //   this.responseTrailer = 'https://www.youtube.com/embed/' + first.key +'?autoplay=1'
@@ -298,48 +286,52 @@ export default defineComponent({
 });
 </script>
  
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 .text-overflow-ellipses {
   overflow: hidden;
- 
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 331px;    
+  max-width: 274px;    
 }
+
 h3 {
-margin: 20px 0 0;
+  margin: 20px 0 0;
 }
+
 ul {
-list-style-type: none;
-padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
+
 li {
-display: inline-block;
-margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
+
 a {
-color: #42b983;
+  color: #42b983;
 }
+
 .in-short {
-width: 200px;
-display: inline-block;
-margin:0;
+  width: 200px;
+  display: inline-block;
+  margin:0;
 }
+
 .random-poster {
   display: flex;
   flex-wrap: wrap;
   padding-top: 2%;
   padding-left: 9%;
-
 }
+
 img {
   width: 200px;
   height: 300px;
 }
 
-/* On screens that are 600px or less, set the background color to olive */
+/* On screens that are 600px or less*/
 @media screen and (max-width: 600px) {
   .img-detail {
     width: 100%;
@@ -351,16 +343,12 @@ img {
     height: 50%;
     padding-right: 10%;
   }
-  /* img {
-    width: 100%;
-    height: 100%;
-    padding-right: 10%;
-  } */
-  p{
+  p {
     font-size: 20px;
     overflow: unset !important;
   }
 }
+
 .yearTitle {
   padding-top: 1%;
   font-size:20px;
@@ -376,8 +364,6 @@ img {
    display: block ;
    gap: 3%;
    padding-left: 10%;
-
-  /* justify-content: center;  */
   }
 }
 </style>
