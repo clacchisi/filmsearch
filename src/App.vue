@@ -24,6 +24,8 @@ export default defineComponent({
   color: #2c3e50;
   /* margin-top: 60px; */
   background: black;
+  padding-bottom: 5%;
+  padding-top: 5%;
 }
 html {
   background: black;

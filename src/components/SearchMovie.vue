@@ -201,11 +201,10 @@ export default defineComponent({
                  this.film.title = resp.data.results[0].title
                  this.film.year = resp.data.results[0].release_date
                  this.film.plot = resp.data.results[0].overview
-                 this.film.imdbRating = resp.data.results[0].vote_average
-                 console.log('resp.data.results[0].title', resp.data.results[0].title)
-                 // console.log('RESP - this.film.id', this.film.id)
-               // console.log(resp);
-               this.fetchTrailer();
+                //  this.film.imdbRating = resp.data.results[0].vote_average
+                 this.film.imdbRating = Math.trunc(resp.data.results[0].vote_average * 10) / 10
+                 
+                  this.fetchTrailer();
   
                
              })
@@ -301,6 +300,11 @@ export default defineComponent({
  
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+body {
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
 
 .text-overflow-ellipses {
   overflow: hidden;
