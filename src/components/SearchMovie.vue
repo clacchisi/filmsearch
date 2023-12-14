@@ -23,8 +23,8 @@
         <!-- <p><b>Director:</b> {{ film.director }}</p>
         <p><b>Genre:</b> {{ film.genre }}</p> -->
         <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
-        <p>Trailer: 
-          <a :href="responseTrailer">{{responseTrailer}}</a>
+        <p v-show="responseTrailer">Trailer: 
+          <a :href="responseTrailer">See on Youtube </a>
         </p>
       </div>
 
@@ -196,7 +196,7 @@ export default defineComponent({
            this.response = axios.get(`https://api.themoviedb.org/3/search/movie?query=${this.search}&include_adult=false&language=en-US&page=1`, config)
                .then(resp => {
                  // this.film.id = resp?.data?.results[0]?.id ? resp?.data?.results[0]?.id : 0
-                 this.film.img = resp?.data?.results[0]?.backdrop_path
+                 this.film.img = resp?.data?.results[0]?.poster_path
                  this.film.id = resp?.data?.results[0]?.id
                  this.film.title = resp.data.results[0].title
                  this.film.year = resp.data.results[0].release_date
