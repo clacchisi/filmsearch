@@ -23,13 +23,13 @@
         <!-- <p><b>Director:</b> {{ film.director }}</p>
         <p><b>Genre:</b> {{ film.genre }}</p> -->
         <p class="in-short"><b>In Short:</b> {{ film.plot }}</p>
+        <p>Trailer: 
+          <a :href="responseTrailer">{{responseTrailer}}</a>
+        </p>
       </div>
 
     </div>
     <div v-show="responseTrailer">
-      <p>Trailer: 
-        <a :href="responseTrailer">{{responseTrailer}}</a>
-      </p>
       <div v-if="innerWidth > mobileinnerWidth">
       <iframe width="500" height="315" :src="responseTrailer" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
