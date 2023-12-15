@@ -3,6 +3,10 @@ module.exports = defineConfig({
   transpileDependencies: true,
   pwa: {
     name: 'My first PWA', 
+    short_name: "Short Name",
+    start_url: "./",
+    display: "standalone",
+    theme_color: "#000000",
     icons: [
       {
         src: "./img/icons/android-chrome-512x512.png",
