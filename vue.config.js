@@ -2,10 +2,10 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
   pwa: {
-    name: 'My first PWA', 
+    name: 'TEST', 
     short_name: "Short Name",
     start_url: "./",
-    display: "standalone",
+    display: "full",
     theme_color: "#000000",
     icons: [
       {
@@ -13,26 +13,26 @@ module.exports = defineConfig({
         sizes: "512x512",
         type: "image/png",
         purpose: "any maskable",
-      }
-      // {
-      //   src: "./img/icons/android-chrome-192x192.png",
-      //   sizes: "192x192",
-      //   type: "image/png",
-      //   purpose: "any maskable",
-      // }, {
-      //   src: "./img/icons/android-chrome-maskable-512x512.png",
-      //   sizes: "512x512",
-      //   type: "image/png",
-      //   purpose: "any maskable",
-      // },
-      // {
-      //   src: "./img/icons/android-chrome-maskable-192x192.png",
-      //   sizes: "192x192",
-      //   type: "image/png",
-      //   purpose: "any maskable",
-      // },
+      },
+      {
+        src: "./img/icons/android-chrome-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any maskable",
+      }, {
+        src: "./img/icons/android-chrome-maskable-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any maskable",
+      },
+      {
+        src: "./img/icons/android-chrome-maskable-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
+        purpose: "any maskable",
+      },
     ],
-    themeColor: "#4DBA87",
+    themeColor: "#000000",
     msTileColor: "#000000",
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
